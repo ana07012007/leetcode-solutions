@@ -1,28 +1,18 @@
 class Solution {
-    public int searchInsert(int[] arr, int target) {
-        int start =0;
-        int end = arr.length -1;
-        int mid =0;
-
-        while(start <= end){
-            mid = start + (end-start)/2;
-
-            if(arr[mid] < target){
-                start = mid +1;
-            }
-            else if(arr[mid] > target){
-                end = mid -1;
-            }
-            else{
-                return mid;
-            }
+    public int searchInsert(int[] nums, int target) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int n : nums){
+            list.add(n);
         }
 
-        if(target> arr[mid]){
-            return mid +1;
+        int p = Collections.binarySearch(list , target);
+
+        if(p >= 0){
+            return p;
         }
         else{
-            return mid;
+            return Math.abs(p) -1;
         }
+        
     }
 }
