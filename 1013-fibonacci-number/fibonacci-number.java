@@ -1,20 +1,13 @@
 class Solution {
     public int fib(int n) {
-        int first = 0;
-        int second = 1;
-        int count = 0;
-        int ans = 0;
-        while(count <= n){
-            ans += first;
-            count++;
-            first = second;
-            second = ans;
+        return ans(n);
+    }
+
+    static int ans(int n){
+        if(n < 2){
+            return n;
         }
-        return ans;
+
+        return ans(n - 1) + ans(n - 2);
     }
 }
-
-
-
-
-
