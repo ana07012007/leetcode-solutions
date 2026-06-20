@@ -4,14 +4,14 @@ class Solution {
         int[] freq = new int[58];
         for(char c : s.toCharArray()){
             freq[c - 'A']++;
-            if(freq[c - 'A']% 2 == 0){
-                ans+=2;
-            }
+            
         }
+        boolean taken = false;
         for(int num : freq){
-            if(num % 2 == 1){
+            ans += num - (num % 2);
+            if(!taken && num % 2 == 1){
                 ans++;
-                break;
+               taken = true;
             }
         }
 
