@@ -11,8 +11,10 @@ class Solution {
                     List<Integer> temp = Arrays.asList(nums[i] , nums[start] , nums[end]);
 
                     ans.add(temp);
+                    start++;
+                    end--;
                 }
-                if(nums[i] + nums[start] + nums[end] < 0){
+                else if(nums[i] + nums[start] + nums[end] < 0){
                    start++;
                 }
                 else{
