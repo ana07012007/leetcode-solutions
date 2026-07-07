@@ -6,6 +6,7 @@ class Solution {
             for(int j = i ; j < nums.length ; j++){
                 pro *= nums[j];
                 ans = Math.max(pro , ans);
+                if(pro == 0)break;
             }
         }
         return ans;
