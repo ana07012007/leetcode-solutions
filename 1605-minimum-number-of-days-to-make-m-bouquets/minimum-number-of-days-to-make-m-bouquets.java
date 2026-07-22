@@ -9,7 +9,7 @@ class Solution {
             start = Math.min(start , i);
             end = Math.max(end , i);
         }
-        int ans = Integer.MAX_VALUE;
+        int ans = -1;
         
         while(start <= end){
             int mid = start + (end - start)/2;
@@ -29,12 +29,11 @@ class Solution {
                 start = mid + 1;
             }else{
                 end = mid - 1;
-                ans = Math.min(ans , mid);
+                ans = mid;
             }
 
         }
 
-        if(ans == Integer.MAX_VALUE)return -1;
-        else return ans;
+        return ans;
     }
 }
