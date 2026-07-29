@@ -1,35 +1,30 @@
 class Solution {
     public int splitArray(int[] nums, int k) {
-        int start =0;
+        int start = 0;
         int end = 0;
-        for(int i =0; i< nums.length ; i++){
-            start = Math.max(start , nums[i]);
-            end += nums[i];
+        for(int i : nums){
+            start = Math.max(start , i);
+            end += i;
         }
 
-        while(start < end){
-            int mid = start + (end-start) / 2;
+        while(start <= end){
+            int mid = start + (end - start)/2;
 
             int sum = 0;
-            int pieces = 1;
-
-            for(int i =0; i< nums.length ; i++){
-                if(sum + nums[i] > mid){
-                    sum = nums[i];
-                    pieces++;
-                }
-                else{
-                    sum += nums[i];
+            int cnt = 1;
+            for(int i : nums){
+                if(sum + i <= mid){
+                    sum += i;
+                }else{
+                    sum = i;
+                    cnt++;
                 }
             }
 
-            if(pieces > k){
-                    start = mid +1;
-                }else{
-                    end = mid;
-                }
-
+            if(cnt <= k)end = mid - 1;
+            else start = mid + 1;
         }
-        return end;
+
+        return start;
     }
 }
