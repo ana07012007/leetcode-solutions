@@ -3,6 +3,7 @@ class Solution {
         if(s.length() != goal.length())return false;
 
         for(int i = 0; i < s.length() ; i++){
+            if(s.charAt(i) != goal.charAt(0))continue;
             StringBuilder sb = new StringBuilder();
 
             for(int j = i; j < s.length(); j++){
