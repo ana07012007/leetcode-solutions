@@ -1,64 +1,28 @@
 class Solution {
     public int romanToInt(String s) {
         int ans = 0;
-        int prev = 0;
+        for(int i = 0 ; i <s.length() ; i++){
+            int value = getValue(s.charAt(i));
 
-        for(char c : s.toCharArray()){
-            if(c == 'I'){
-                ans += 1;
-                prev = 1;
-            }else if(c == 'V'){
-                if(prev == 1){
-                    ans += 3;
-                    prev = 5;
-                }else{
-                    ans += 5;
-                    prev = 5;
-                }
-            }else if(c == 'X'){
-                if(prev  == 1){
-                    ans += 8;
-                    prev = 10;
-                }else {
-                    ans += 10;
-                    prev = 10;
-                }
-            }else if(c == 'L'){
-                if(prev == 10){
-                    ans += 30;
-                    prev = 50;
-                }else{
-                    ans += 50;
-                    prev = 50;
-                }
-            }else if(c == 'C'){
-                if(prev == 10){
-                    ans += 80;
-                    prev = 100;
-                }else{
-                    ans += 100;
-                    prev = 100;
-                }
-            }else if(c == 'D'){
-                if(prev == 100){
-                    ans += 300;
-                    prev = 500;
-                }else{
-                    ans += 500;
-                    prev = 500;
-                }
-            }else if(c == 'M'){
-                if(prev == 100){
-                    ans += 800;
-                    prev = 1000;
-                }else{
-                    ans += 1000;
-                    prev = 1000;
-                }
-            }
+            if(i + 1 < s.length() && value < getValue(s.charAt(i+1)))ans -= value;
+            else ans += value;
         }
 
         return ans;
-        
+    }
+
+    public int getValue(char c){
+        switch(c){
+            case 'I': return 1;
+            case 'V':return 5;
+            case 'X':return 10;
+            case 'L':return 50;
+            case 'C':return 100;
+            case 'D':return 500;
+            case 'M': return 1000;
+
+        }
+
+        return -1;
     }
 }
