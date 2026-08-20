@@ -10,12 +10,11 @@ class Solution {
             else arr2.add(nums[i]);
         }
 
-        int[] ans = new int[nums.length];
 
         int index = 0;
-        for(int i : arr1)ans[index++] = i;
-        for(int i : arr2)ans[index++] = i;
+        for(int i : arr1)nums[index++] = i;
+        for(int i : arr2)nums[index++] = i;
 
-        return ans;
+        return nums;
     }
 }
