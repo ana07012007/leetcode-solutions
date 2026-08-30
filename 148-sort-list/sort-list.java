@@ -20,13 +20,9 @@ class Solution {
         }
 
         Arrays.sort(arr);
-        ListNode newhead = new ListNode(arr[0]);
-        head = newhead;
-
         temp = head;
-        for(int i = 1 ; i < length ; i++){
-            ListNode node = new ListNode(arr[i]);
-            temp.next = node;
+        for(int i = 0 ; i < length ; i++){
+            temp.val = arr[i];
             temp = temp.next;
         }
 
