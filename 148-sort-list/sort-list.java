@@ -10,33 +10,70 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        if(head == null || head.next == null)return head;
-        int length = length(head);
-        int[] arr = new int[length];
-        ListNode temp = head;
-        for(int i = 0 ; i < length ; i++){
-            arr[i] = temp.val;
-            temp = temp.next;
-        }
-
-        Arrays.sort(arr);
-        temp = head;
-        for(int i = 0 ; i < length ; i++){
-            temp.val = arr[i];
-            temp = temp.next;
-        }
-
-        return head;
+        return mergesort(head);
     }
 
-    public int length(ListNode head){
-        ListNode temp = head;
-        int ans = 0;
-        while(temp != null){
-            temp = temp.next;
-            ans++;
+    public ListNode mergesort(ListNode head){
+        if(head == null || head.next == null)return head;
+
+        ListNode mid = middle(head);
+        ListNode lefthead = head;
+        ListNode righthead = mid.next;
+        mid.next = null;
+
+        lefthead = mergesort(lefthead);
+        righthead = mergesort(righthead);
+
+        return merge(lefthead , righthead);
+    }
+
+    public ListNode middle(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast != null && fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
-        return ans;
+        return slow;
+    }
+
+    public ListNode merge(ListNode left , ListNode right){
+        ListNode newhead = null;
+        if(left.val <= right.val){
+            newhead = left;
+            left = left.next;
+        }else{
+            newhead = right;
+            right = right.next;
+        }
+
+        ListNode temp = newhead;
+
+        while(left != null && right != null){
+            if(left.val <= right.val){
+                temp.next = left;
+                left = left.next;
+            }else{
+                temp.next = right;
+                right = right.next;
+            }
+            temp = temp.next;
+        }
+
+        while(left != null){
+            temp.next = left;
+            left = left.next;
+            temp = temp.next;
+        }
+
+        while(right != null){
+            temp.next = right;
+            right = right.next;
+            temp = temp.next;
+        }
+
+        return newhead;
     }
 }
