@@ -55,17 +55,8 @@ class Solution {
             temp = temp.next;
         }
 
-        while(left != null){
-            temp.next = left;
-            left = left.next;
-            temp = temp.next;
-        }
-
-        while(right != null){
-            temp.next = right;
-            right = right.next;
-            temp = temp.next;
-        }
+        if(left != null)temp.next = left;
+        else temp.next = right;
 
         return newhead.next;
     }
