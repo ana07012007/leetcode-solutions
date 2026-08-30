@@ -40,14 +40,7 @@ class Solution {
     }
 
     public ListNode merge(ListNode left , ListNode right){
-        ListNode newhead = null;
-        if(left.val <= right.val){
-            newhead = left;
-            left = left.next;
-        }else{
-            newhead = right;
-            right = right.next;
-        }
+        ListNode newhead = new ListNode(-1);
 
         ListNode temp = newhead;
 
@@ -74,6 +67,6 @@ class Solution {
             temp = temp.next;
         }
 
-        return newhead;
+        return newhead.next;
     }
 }
