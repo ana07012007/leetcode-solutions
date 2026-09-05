@@ -10,25 +10,21 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        if(head == null || head.next == null || k == 0)return head;
         int length = findlength(head);
-       
-        ListNode temp = head;
-        ListNode prev = null;
-        int cnt = 0;
-        k = k % length;
+        if(head == null || head.next == null || k == 0)return head;
+        k %= length;
+        if(k == 0)return head;
+        ListNode newhead = reverse(head);
+        ListNode temp = newhead;
+        while(temp != null && k-- > 1)temp = temp.next;
+        ListNode nextNode = temp.next;
+        temp.next = null;
         
-        if(length == k || k == 0)return head;
-        while(cnt++ < length - k){
-            prev = temp;
-            temp = temp.next;
-        }
-        ListNode newhead = temp;
-        prev.next = null;
-        while(temp != null && temp.next != null)temp = temp.next;
-
-        temp.next = head;
-        return newhead;
+        head = reverse(newhead);
+        ListNode curr = reverse(nextNode);
+        newhead.next = curr;
+        
+        return head;
     }
 
     public int findlength(ListNode head){
@@ -40,5 +36,17 @@ class Solution {
         }
 
         return ans;
+    }
+
+    public ListNode reverse(ListNode head){
+        if(head == null || head.next == null)return head;
+
+        ListNode newhead = reverse(head.next);
+
+        ListNode front = head.next;
+        front.next = head;
+        head.next = null;
+
+        return newhead;
     }
 }
