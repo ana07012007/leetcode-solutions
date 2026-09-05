@@ -10,50 +10,50 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        int length = length(head);
-
-        length /= k;
         ListNode temp = head;
-        ListNode curr = head;
-        ListNode prev = null;
-        for(int i = 0; i < length ; i++){
-            int cnt = k;
-            while(cnt-- > 0)temp = temp.next;
-            if(i == 0){
-                head = reverse(head , k);
-                curr.next = temp;
-                prev = curr;
-                curr = temp;
-            }else{
-                ListNode newhead = reverse(curr , k);
-                prev.next = newhead;
-                prev = curr;
-                curr.next = temp;;
-                curr = curr.next;
+        ListNode prevNode = null;
+        
+        while(temp != null){
+            ListNode kthNode = findkthnode(temp , k);
+
+            if(kthNode == null){
+                prevNode.next = temp;
+                break;
             }
+
+            ListNode nextNode = kthNode.next;
+            kthNode.next = null;
+            ListNode rev = reverse(temp);
+
+            if(temp == head){
+                head = kthNode;
+            }else{
+                prevNode.next = kthNode;
+            }
+
+            prevNode = temp;
+            temp = nextNode;
         }
 
         return head;
     }
-    public ListNode reverse(ListNode head , int count){
-        if(count == 1)return head;
 
-        ListNode newhead = reverse(head.next , count - 1);
+    public ListNode reverse(ListNode head){
+        if(head == null || head.next == null)return head;
+
+        ListNode newhead = reverse(head.next);
 
         ListNode front = head.next;
         front.next = head;
         head.next = null;
+
         return newhead;
     }
 
-    public int length(ListNode head){
+    public ListNode findkthnode(ListNode head , int k){
         ListNode temp = head;
-        int ans = 0;
-        while(temp != null){
-            ans++;
-            temp = temp.next;
-        }
+        while(k-- > 1 && temp != null)temp = temp.next;
 
-        return ans;
+        return temp;
     }
 }
