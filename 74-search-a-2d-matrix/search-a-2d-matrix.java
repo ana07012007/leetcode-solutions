@@ -1,66 +1,33 @@
 class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        int row = matrix.length;
-        int col = matrix[0].length;
+    public boolean searchMatrix(int[][] mat, int target) {
+        int low = 0 ;
+        int high = mat.length - 1;
         
-        if(row==1){
-            return binarysearch(matrix , 0, 0 , col-1 ,target );
-        }
-        int rs = 0;
-        int re = row-1;
-        int cmid = col/2;
-
-        while(rs<re-1){
-            int rmid = rs+ (re-rs)/2;
-
-            if(matrix[rmid][cmid] == target){
-                return true;
+        while(low <= high){
+            int mid = low + (high - low)/2;
+            if(mat[mid][0] < target){
+                low = mid+1;
             }
-
-            if(matrix[rmid][cmid] < target){
-                rs = rmid;
+            else if(mat[mid][0] > target){
+                high = mid - 1;
             }else{
-                re = rmid;
-            }
-        }
-
-        if(matrix[rs][cmid]==target){
-            return true;
-        }
-
-        if(matrix[re][cmid] == target){
-            return true;
-        }
-
-
-        if(target >= matrix[rs][0] &&cmid-1>=0 && target <= matrix[rs][cmid-1]){
-            return binarysearch(matrix, rs, 0 ,cmid-1 , target);
-        }
-        else if(cmid+1<col && target >= matrix[rs][cmid+1]&& target <= matrix[rs][col - 1]){
-            return binarysearch(matrix, rs, cmid+1 ,col-1 , target);
-        }
-        else if(target >= matrix[re][0] && cmid-1>=0 && target <= matrix[re][cmid-1]){
-            return binarysearch(matrix, re, 0 ,cmid-1 , target);
-        }
-         else if(cmid+1<col && target >= matrix[re][cmid+1]){
-            return binarysearch(matrix, re, cmid+1 ,col-1 , target);
-        }
-        return false;
-    }
-
-    static boolean binarysearch(int[][] arr ,int row , int start , int end, int target){
-
-        while(start<=end){
-            int mid = start + (end - start)/2;
-
-            if(arr[row][mid] == target){
                 return true;
             }
-            else if(arr[row ][mid] <target){
-                start = mid+1;
+        }
+        if(high < 0)return false;
+
+        int left = 0 ;
+        int right = mat[high].length - 1;
+        while(left <= right){
+            int mid = left + (right - left) /2;
+            if(mat[high][mid] < target){
+                left = mid + 1;
+            }
+            else if(mat[high][mid] > target){
+                right = mid - 1;
             }
             else{
-                end = mid-1;
+                return true;
             }
         }
 
