@@ -1,17 +1,16 @@
 class Solution {
     public double myPow(double x, int n) {
         if(n < 0){
-           double ans = power(x , -n);
-           return 1/ans;
+            double temp = power(x ,-1* (long)(n));
+            return 1/temp;
         }
-
-        return power(x , n);
+        else{ return power(x , n);}
     }
 
-    public double power(double num , int n){
+    public double power(double x, long n){
         if(n == 0)return 1;
-        if(n == 1)return num;
-        if(n % 2 == 0)return power(num * num , n/2);
-        else return num * power(num * num , n/2);
+        if(n == 1)return x;
+        if(n % 2 == 1)return power(x * x , n / 2)  * x;
+        else return power(x * x , n/2);
     }
 }
