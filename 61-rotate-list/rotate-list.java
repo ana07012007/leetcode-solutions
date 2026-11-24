@@ -10,36 +10,31 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        int length = findlength(head);
-        if(head == null || head.next == null || k == 0)return head;
-        k %= length;
-        if(k == 0)return head;
+        if(head == null || head.next == null)return head;
+        int len = length(head);
+        k %= len;
+        if(k == 0 )return head;
         ListNode newhead = reverse(head);
-        ListNode temp = newhead;
-        while(temp != null && k-- > 1)temp = temp.next;
-        ListNode nextNode = temp.next;
-        temp.next = null;
-        
-        head = reverse(newhead);
-        ListNode curr = reverse(nextNode);
-        newhead.next = curr;
-        
-        return head;
-    }
 
-    public int findlength(ListNode head){
-        ListNode temp = head;
-        int ans = 0;
-        while(temp != null){
-            ans++;
+        ListNode temp = newhead;
+        ListNode prev = temp;
+        
+        for(int i = 0 ; i < k ; i++){
+            prev = temp;
             temp = temp.next;
         }
+        ListNode oldhead = newhead;
 
-        return ans;
+        prev.next = null;
+        head = reverse(newhead);
+        oldhead.next = reverse(temp);
+
+        return head;
+
     }
 
     public ListNode reverse(ListNode head){
-        if(head == null || head.next == null)return head;
+        if(head.next == null)return head;
 
         ListNode newhead = reverse(head.next);
 
@@ -48,5 +43,16 @@ class Solution {
         head.next = null;
 
         return newhead;
+    }
+
+    public int length(ListNode head){
+        int ans = 0;
+        ListNode temp = head;
+        while(temp != null){
+            temp = temp.next;
+            ans++;
+        }
+
+        return ans;
     }
 }
