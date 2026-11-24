@@ -11,49 +11,48 @@
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode temp = head;
-        ListNode prevNode = null;
-        
+        int len = 0;
         while(temp != null){
-            ListNode kthNode = findkthnode(temp , k);
-
-            if(kthNode == null){
-                prevNode.next = temp;
-                break;
-            }
-
-            ListNode nextNode = kthNode.next;
-            kthNode.next = null;
-            ListNode rev = reverse(temp);
-
-            if(temp == head){
-                head = kthNode;
+            temp = temp.next;
+            len++;
+        }
+        len /= k;
+        ListNode prev = null;
+        ListNode curr = head;
+        temp = head;
+        
+        
+        for(int i = 0 ; i < len ; i++){
+            int cnt = k;
+            while(cnt-- > 0)temp = temp.next;
+            if(i == 0){
+                head = reverse(head , k);
+                curr.next = temp;
+                prev = curr;
+                curr = temp;
             }else{
-                prevNode.next = kthNode;
+                ListNode newhead = reverse(curr , k);
+                prev.next = newhead;
+                curr.next = temp;
+                prev = curr;
+                curr = temp;
             }
-
-            prevNode = temp;
-            temp = nextNode;
         }
 
         return head;
+        
+
     }
 
-    public ListNode reverse(ListNode head){
-        if(head == null || head.next == null)return head;
+    public ListNode reverse(ListNode head , int count){
+        if(count == 1)return head;
 
-        ListNode newhead = reverse(head.next);
+        ListNode newhead = reverse(head.next , count - 1);
 
         ListNode front = head.next;
         front.next = head;
         head.next = null;
 
         return newhead;
-    }
-
-    public ListNode findkthnode(ListNode head , int k){
-        ListNode temp = head;
-        while(k-- > 1 && temp != null)temp = temp.next;
-
-        return temp;
     }
 }
